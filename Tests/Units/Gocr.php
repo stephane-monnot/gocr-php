@@ -27,7 +27,7 @@ class Gocr extends atoum
     public function testConstruct()
     {
         $this
-            ->if($gocr = new TestClass('images/welcome.png'))
+            ->if($gocr = new TestClass(__DIR__ . DIRECTORY_SEPARATOR . 'images/welcome.png'))
             ->object($gocr)
                 ->isInstanceOf('\Shinbuntu\Gocr\Gocr')
             ->object()
@@ -42,10 +42,10 @@ class Gocr extends atoum
 
             ->exception(
                 function(){
-                    new TestClass('images/imagenotexist.png');
+                    new TestClass(__DIR__ . DIRECTORY_SEPARATOR . 'images/imagenotexist.png');
                 }
             )
-                ->hasMessage('The file "images/imagenotexist.png" does not exist.')
+                ->hasMessage('The file "' . __DIR__ . DIRECTORY_SEPARATOR . 'images/imagenotexist.png" does not exist.')
                 ->isInstanceOf('\Exception')
 
         ;
@@ -59,7 +59,7 @@ class Gocr extends atoum
     public function testRecognize()
     {
         $this
-            ->if($gocr = new TestClass('images/welcome.png'))
+            ->if($gocr = new TestClass(__DIR__ . DIRECTORY_SEPARATOR . 'images/welcome.png'))
             ->string($gocr->recognize())
                 ->isEqualTo(
                     'Hello GOCR, Welcome to PHP\'s world'
@@ -93,7 +93,7 @@ class Gocr extends atoum
     public function testRecognizeWithSpaceWidthParam()
     {
         $this
-            ->if($gocr = new TestClass('images/welcome.png'))
+            ->if($gocr = new TestClass(__DIR__ . DIRECTORY_SEPARATOR . 'images/welcome.png'))
             ->and($gocr->setSpaceWidthParam(1))
             ->string($gocr->recognize())
             ->isEqualTo(
@@ -120,7 +120,7 @@ class Gocr extends atoum
     public function testGetAndSet()
     {
         $this
-            ->if($gocr = new TestClass('images/welcome.png'))
+            ->if($gocr = new TestClass(__DIR__ . DIRECTORY_SEPARATOR .  'images/welcome.png'))
             ->and($gocr->setDatabasePathParam('./db/'))
             ->string($gocr->getDatabasePathParam())
                 ->isEqualTo('./db/')
