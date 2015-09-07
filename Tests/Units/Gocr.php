@@ -27,7 +27,7 @@ class Gocr extends atoum
     public function testConstruct()
     {
         $this
-            ->if($gocr = new TestClass(__DIR__ . DIRECTORY_SEPARATOR . 'images/welcome.png'))
+            ->if($gocr = new TestClass(__DIR__ . DIRECTORY_SEPARATOR . 'testData/images/welcome.png'))
             ->object($gocr)
                 ->isInstanceOf('\Shinbuntu\Gocr\Gocr')
             ->object()
@@ -42,10 +42,10 @@ class Gocr extends atoum
 
             ->exception(
                 function(){
-                    new TestClass(__DIR__ . DIRECTORY_SEPARATOR . 'images/imagenotexist.png');
+                    new TestClass(__DIR__ . DIRECTORY_SEPARATOR . 'testData/images/imagenotexist.png');
                 }
             )
-                ->hasMessage('The file "' . __DIR__ . DIRECTORY_SEPARATOR . 'images/imagenotexist.png" does not exist.')
+                ->hasMessage('The file "' . __DIR__ . DIRECTORY_SEPARATOR . 'testData/images/imagenotexist.png" does not exist.')
                 ->isInstanceOf('\Exception')
 
         ;
@@ -59,7 +59,7 @@ class Gocr extends atoum
     public function testRecognize()
     {
         $this
-            ->if($gocr = new TestClass(__DIR__ . DIRECTORY_SEPARATOR . 'images/welcome.png'))
+            ->if($gocr = new TestClass(__DIR__ . DIRECTORY_SEPARATOR . 'testData/images/welcome.png'))
             ->string($gocr->recognize())
                 ->isEqualTo(
                     'Hello GOCR, Welcome to PHP\'s world'
@@ -93,7 +93,7 @@ class Gocr extends atoum
     public function testRecognizeWithSpaceWidthParam()
     {
         $this
-            ->if($gocr = new TestClass(__DIR__ . DIRECTORY_SEPARATOR . 'images/welcome.png'))
+            ->if($gocr = new TestClass(__DIR__ . DIRECTORY_SEPARATOR . 'testData/images/welcome.png'))
             ->and($gocr->setSpaceWidthParam(1))
             ->string($gocr->recognize())
             ->isEqualTo(
@@ -113,6 +113,61 @@ class Gocr extends atoum
     }
 
     /**
+     * Test method recognize with ValueForCertaintyOfRecognitionParam
+     *
+     * @return void
+     */
+    public function testRecognizeWithValueForCertaintyOfRecognitionParam()
+    {
+        $this
+            ->if($gocr = new TestClass(__DIR__ . DIRECTORY_SEPARATOR . 'testData/images/welcome.png'))
+            ->and($gocr->setValueForCertaintyOfRecognitionParam(100))
+            ->string($gocr->recognize())
+            ->isEqualTo(
+                'He__o G_CR_ We_come to PHP\'s wor_d'
+                . "\n"
+                . '_njoy it _ _ _'
+            )
+
+            ->and($gocr->setValueForCertaintyOfRecognitionParam(0))
+            ->string($gocr->recognize())
+            ->isEqualTo(
+                'Hello GOCR, Welcome to PHP\'s world'
+                . "\n"
+                . 'Enjoy it ! ! !'
+            )
+        ;
+    }
+
+    /**
+     * Test method recognize with DatabasePathParam
+     *
+     * @return void
+     */
+    public function testRecognizeWithDatabasePathParam()
+    {
+        $this
+            ->if($gocr = new TestClass(__DIR__ . DIRECTORY_SEPARATOR . 'testData/images/welcome.png'))
+            ->and($gocr->setDatabasePathParam(__DIR__ . DIRECTORY_SEPARATOR . 'testData/db/'))
+            ->and($gocr->setModeParam(258))
+            ->string($gocr->recognize())
+            ->isEqualTo(
+                'ABCCD EFGHi JBCkD1B 2D 3A345 6D7C8'
+                . "\n"
+                . '9;/DX *2 A A A'
+            )
+
+//            ->and($gocr->setValueForCertaintyOfRecognitionParam(0))
+//            ->string($gocr->recognize())
+//            ->isEqualTo(
+//                'Hello GOCR, Welcome to PHP\'s world'
+//                . "\n"
+//                . 'Enjoy it ! ! !'
+//            )
+        ;
+    }
+
+    /**
      * Test getters et setters
      *
      * @return void
@@ -120,7 +175,7 @@ class Gocr extends atoum
     public function testGetAndSet()
     {
         $this
-            ->if($gocr = new TestClass(__DIR__ . DIRECTORY_SEPARATOR .  'images/welcome.png'))
+            ->if($gocr = new TestClass(__DIR__ . DIRECTORY_SEPARATOR .  'testData/images/welcome.png'))
             ->and($gocr->setDatabasePathParam('./db/'))
             ->string($gocr->getDatabasePathParam())
                 ->isEqualTo('./db/')
