@@ -67,7 +67,8 @@ class Gocr
      * Set spacewidth between words in units of dots (default: 0 for autodetect), wider widths are interpreted as word
      * spaces, smaller as character spaces
      *
-     * @param float|int|null $spaceWidthParam
+     * @param float|int|null $spaceWidthParam Spacewidth to set
+     * @return void
      */
     public function setSpaceWidthParam($spaceWidthParam)
     {
@@ -87,7 +88,8 @@ class Gocr
     /**
      * Set Operational mode; mode is a bitfield (default: 0)
      *
-     * @param int|null $modeParam
+     * @param int|null $modeParam Operational mode to set
+     * @return void
      */
     public function setModeParam($modeParam)
     {
@@ -115,7 +117,9 @@ class Gocr
      * characters with a lower certainty are treated as unknown (not recognized); set higher values, if you want to have
      * only more certain recognized characters
      *
-     * @param int|null $valueForCertaintyOfRecognitionParam
+     * @param int|null $valueForCertaintyOfRecognitionParam Value for certainty of recognition to set.
+     *                                                      If null, the default value (95) will be used
+     * @return void
      */
     public function setValueForCertaintyOfRecognitionParam($valueForCertaintyOfRecognitionParam)
     {
@@ -142,7 +146,8 @@ class Gocr
      * Set database path, a final slash must be included, default is ./db/, this path will be populated with images of
      * learned characters
      *
-     * @param string|null $databasePathParam
+     * @param string|null $databasePathParam Database path
+     * @return void
      */
     public function setDatabasePathParam($databasePathParam)
     {
@@ -161,6 +166,8 @@ class Gocr
 
     /**
      * Execute Gocr command and return output
+     *
+     * @return string
      */
     protected function execute()
     {
