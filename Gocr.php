@@ -202,25 +202,25 @@ class Gocr
         $stringParams = '';
         if ($this->valueForCertaintyOfRecognitionParam) {
             $stringParams .= '-a '
-                . $this->valueForCertaintyOfRecognitionParam
+                . escapeshellarg($this->valueForCertaintyOfRecognitionParam)
                 . ' ';
         }
 
         if ($this->databasePathParam) {
             $stringParams .= '-p '
-                . $this->databasePathParam
+                . escapeshellarg($this->databasePathParam)
                 . ' ';
         }
 
         if ($this->modeParam) {
             $stringParams .= '-m '
-                . $this->modeParam
+                . escapeshellarg($this->modeParam)
                 . ' ';
         }
 
         if ($this->spaceWidthParam) {
             $stringParams .= '-s '
-                . $this->spaceWidthParam
+                . escapeshellarg($this->spaceWidthParam)
                 . ' ';
         }
 
